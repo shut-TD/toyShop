@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toyshop.Dao.clerkDao">
+<!--    职员插入-->
+    <insert id="insertClerk" parameterType="com.toyshop.Entity.Clerk">
+        INSERT INTO clerk VALUES(#{clerkDate},#{clerkName},#{clerkId})
+    </insert>
+<!--    职员列表-->
+    <select id="getAllClerk" resultType="com.toyshop.Entity.Clerk">
+        SELECT * FROM clerk
+    </select>
+<!--    修改职员信息-->
+    <update id="updateClerk">
+        UPDATE clerk
+        <set>
+            <if test="clerkDate != null">
+                clerkDate = #{clerkDate},
+            </if>
+            <if test="clerkName != null and clerkName != ''">
+                clerkName = #{clerkName},
+            </if>
+        </set>
+        WHERE clerkId = #{clerkId}
+    </update>
+<!--    职员删除-->
+    <delete id="deleteByClerkId" parameterType="String">
+        DELETE FROM clerk WHERE clerkId = #{clerkId}
+    </delete>
+</mapper>

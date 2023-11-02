@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toyshop.Dao.profitDao">
+    <delete id="delByTradeId" parameterType="String">
+        DELETE FROM profit WHERE tradeId = #{tradeId}
+    </delete>
+
+    <update id="updateProfit" parameterType="com.toyshop.Entity.Profit">
+        UPDATE profit
+        <set>
+            <if test="startDate != null and startDate.isBefore(endDate)">
+                startDate = #{startDate},
+            </if>
+            <if test="endDate != null and endDate.isAfter(startDate)">
+                endDate = #{endDate},
+            </if>
+            <if test="vipName  != null">
+                vipName = #{vipName},
+            </if>
+            <if test="vipId != null">
+                vipId = #{vipId},
+            </if>
+            <if test="toyName != null">
+                toyName = #{toyName},
+            </if>
+            <if test="toyId != null">
+                toyId = #{toyId},
+            </if>
+            <if test="toyProfit != null">
+                toyProfit = #{toyProfit},
+            </if>
+            <if test="toyToClerk != null">
+                toyToClerk = #{toyToClerk},
+            </if>
+            <if test="clerkId">
+                clerkId = #{clerkId},
+            </if>
+        </set>
+        WHERE tradeId = #{tradeId}
+    </update>
+<!--    获取利润TOP3-->
+    <select id="getTopProfit" resultMap="ToyProfitResultMap">
+        SELECT toyName,SUM(toyProfit) FROM profit GROUP BY toyName ORDER BY SUM(toyProfit) DESC
+    </select>
+
+    <resultMap id="ToyProfitResultMap" type="com.toyshop.Entity.TempEntity.ProfitTop">
+        <result column="toyName" property="toyName"/>
+        <result column="SUM(toyProfit)" property="toyProfit"/>
+    </resultMap>
+
+</mapper>

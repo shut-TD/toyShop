@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toyshop.Dao.toyProductDao">
+<!--    玩具列表-->
+    <select id="listToyproduct" resultType="com.toyshop.Entity.ToyProduct">
+        SELECT * FROM toyProduct
+    </select>
+<!--    添加玩具信息-->
+    <insert id="insertToy" parameterType="com.toyshop.Entity.ToyProduct">
+        INSERT INTO toyProduct VALUES (#{toyId},#{toyName},#{price},#{buytime},#{annexNumber},#{damSituation},#{isBroken})
+    </insert>
+<!--    删除玩具-->
+    <delete id="delToy" parameterType="String">
+        DELETE FROM toyproduct WHERE toyId = #{toyId}
+    </delete>
+
+    <update id="updateToy" parameterType="com.toyshop.Entity.ToyProduct">
+        UPDATE toyproduct
+        <set>
+            <if test="toyName != null">
+                toyName = #{toyName},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="buytime != null">
+                buytime = #{buytime},
+            </if>
+            <if test="annexNumber != null">
+                annexNumber = #{annexNumber},
+            </if>
+            <if test="damSituation != null">
+                damSituation = #{damSituation},
+            </if>
+            <if test="isBroken != null">
+                isBroken = #{isBroken},
+            </if>
+        </set>
+        WHERE
+        toyId = #{toyId}
+    </update>
+<!--    获取本日进货量-->
+    <select id="getWeekIncome" parameterType="java.time.LocalDate" resultType="int">
+        SELECT COUNT(*) FROM toyproduct WHERE buytime = #{buytime}
+    </select>
+<!--    获取玩具状态饼图数据-->
+    <select id="getDamCount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM toyproduct WHERE damSituation = #{Damsituation}
+    </select>
+</mapper>

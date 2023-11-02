@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toyshop.Dao.userDao">
+<!--    注册-->
+    <select id="isExists" parameterType="String" resultType="com.toyshop.Entity.User">
+        SELECT * FROM user where username = #{username}
+    </select>
+    <insert id="insertUser" parameterType="com.toyshop.Entity.User" >
+        INSERT INTO `user` VALUES(#{username},#{password},#{imgName},0)
+    </insert>
+
+<!--    登录-->
+    <select id="checkLogin" parameterType="String" resultType="com.toyshop.Entity.User">
+        SELECT * FROM `user` WHERE username = #{username} and `password` = #{password}
+    </select>
+<!--    获取个人信息-->
+    <select id="isAdmin" parameterType="String" resultType="int">
+        SELECT isadmin FROM `user` WHERE username = #{username}
+    </select>
+    <select id="checkImg" parameterType="String" resultType="String">
+        SELECT imgName FROM `user` WHERE username = #{username}
+    </select>
+<!--    修改个人信息-->
+    <update id="updateInfo" parameterType="com.toyshop.Entity.User">
+        UPDATE user
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="imgName != null and imgName != ''">
+                imgName = #{imgName},
+            </if>
+        </set>
+        where username = #{username}
+    </update>
+</mapper>

@@ -1,0 +1,30 @@
+server:
+  port: 6688
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///toyshop?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: yyy814043671
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: admin@redis
+    timeout: 1000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+  global-config:
+    db-config:
+      id-type: assign_uuid
+  mapper-locations: classpath:Mapper/*.xml
+
