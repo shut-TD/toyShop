@@ -6,3 +6,9 @@
 数据库为: MySql
 
 拿来练手还是不戳的，crud项目懂得都懂，基本操作都有，适合快速练手
+
+![image](login.png)
+
+![image](echarts.png)
+
+![image](product.png)
